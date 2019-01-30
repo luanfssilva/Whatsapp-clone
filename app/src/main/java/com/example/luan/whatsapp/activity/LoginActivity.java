@@ -1,10 +1,12 @@
-package com.example.luan.whatsapp;
+package com.example.luan.whatsapp.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.luan.whatsapp.R;
 
 public class LoginActivity extends AppCompatActivity {
 
