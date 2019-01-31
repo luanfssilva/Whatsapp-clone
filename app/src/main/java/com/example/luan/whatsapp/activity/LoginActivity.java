@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity {
 
     private TextInputEditText campoEmail, campoSenha;
-    private TextView textCadastrase;
+    private TextView btnCadastrase;
     private Button btnLogin;
     private FirebaseAuth autenticacao;
 
@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         campoEmail = findViewById(R.id.editLogarEmailId);
         campoSenha = findViewById(R.id.editLogarSenhaId);
         btnLogin   = findViewById(R.id.btnLoginId);
-        textCadastrase = findViewById(R.id.textCadastraseId);
+        btnCadastrase = findViewById(R.id.textCadastraseId);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,9 +51,10 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //Abrir tela de cadastro
-        textCadastrase.setOnClickListener(new View.OnClickListener() {
+        btnCadastrase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnCadastrase.setEnabled(false);
                 startActivity(new Intent(LoginActivity.this,CadastroActivity.class));
             }
         });
@@ -99,6 +100,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         btnLogin.setEnabled(true);
+        btnCadastrase.setEnabled(true);
         //Para recuperar o usuário atual
         FirebaseUser usuarioAtual = autenticacao.getCurrentUser();
         if(usuarioAtual != null){

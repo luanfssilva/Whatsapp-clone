@@ -9,4 +9,7 @@
     <string name="menu_action_pesquisar">Pesquisa</string>
     <string name="menu_action_configuracao">Configurações</string>
     <string name="menu_action_sair">Sair</string>
+
+    <string name="fragment_conversas">Conversas</string>
+    <string name="fragment_contatos">Conversas</string>
 </resources>
