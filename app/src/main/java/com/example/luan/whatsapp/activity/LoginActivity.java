@@ -21,6 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,10 +45,12 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 validarAutenticacaoUsuario();
             }
         });
 
+        //Abrir tela de cadastro
         textCadastrase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void logarUsuario(Usuario usuario){
 
+        btnLogin.setEnabled(false);
         autenticacao.signInWithEmailAndPassword(
                 usuario.getEmail(), usuario.getSenha()
         ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -82,13 +86,24 @@ public class LoginActivity extends AppCompatActivity {
                         excecao = "Erro ao logar usuário: " + e.getMessage();
                         e.getStackTrace();
                     }
-
+                    btnLogin.setEnabled(true);
                     Toast.makeText(LoginActivity.this,
                             excecao, Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        btnLogin.setEnabled(true);
+        //Para recuperar o usuário atual
+        FirebaseUser usuarioAtual = autenticacao.getCurrentUser();
+        if(usuarioAtual != null){
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
     }
 
     public void validarAutenticacaoUsuario(){

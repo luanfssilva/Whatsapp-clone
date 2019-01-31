@@ -46,6 +46,7 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     public void validarCadastroUsuario(){
+
         //Recupear textos dos campos
         String textoNome  = campoNome.getText().toString();
         String textoEmail = campoEmail.getText().toString();
