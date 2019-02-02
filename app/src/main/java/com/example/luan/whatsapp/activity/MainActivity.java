@@ -1,5 +1,6 @@
 package com.example.luan.whatsapp.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -68,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuSair:
                 deslogarUsuario();
                 finish();
+                break;
+            case R.id.menuConfiguracoes:
+                startActivity(new Intent(MainActivity.this,ConfiguracoesActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.luan.whatsapp.R;
 import com.example.luan.whatsapp.config.ConfiguracaoFirebase;
+import com.example.luan.whatsapp.helper.Base64Custom;
 import com.example.luan.whatsapp.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -77,8 +78,9 @@ public class CadastroActivity extends AppCompatActivity {
         }
     }
 
-    public void cadastrarUsuarioFirebase(Usuario usuario){
+    public void cadastrarUsuarioFirebase(final Usuario usuario){
 
+        btnCadastrar.setEnabled(false);
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         autenticacao.createUserWithEmailAndPassword(
                 usuario.getEmail(),usuario.getSenha()
@@ -89,10 +91,19 @@ public class CadastroActivity extends AppCompatActivity {
                 //Verifica se teve sucesso no cadastro do usuario
                 if(task.isSuccessful()){
 
-                    Toast.makeText(CadastroActivity.this,
-                            "Sucessoa o cadastrar usuário!",
-                            Toast.LENGTH_SHORT).show();
+                    try{
+
+                        String idUsuario = Base64Custom.codificadorBase64(usuario.getEmail());
+                        usuario.setUid(idUsuario);
+                        usuario.salvar();
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                     finish();
+
+
                 }else{
 
                     String excecao = "";
@@ -109,6 +120,7 @@ public class CadastroActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
+                    btnCadastrar.setEnabled(true);
                     Toast.makeText(CadastroActivity.this,excecao,
                             Toast.LENGTH_SHORT).show();
 
