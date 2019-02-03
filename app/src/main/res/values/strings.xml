@@ -14,4 +14,5 @@
     <string name="fragment_contatos">Conversas</string>
     <string name="Username">Nome do Usuário</string>
     <string name="msg_configuracao">Este não é seu nome de usuário nem sua senha. Este ficará visivel para seus contatos do WhatsApp</string>
+    <string name="alertPermission">Para utilizar o app é necessário aceitar as permissões</string>
 </resources>
