@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.luan.whatsapp.R;
 import com.example.luan.whatsapp.config.ConfiguracaoFirebase;
 import com.example.luan.whatsapp.helper.Base64Custom;
+import com.example.luan.whatsapp.helper.UsuarioFirebase;
 import com.example.luan.whatsapp.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -91,6 +92,8 @@ public class CadastroActivity extends AppCompatActivity {
                 //Verifica se teve sucesso no cadastro do usuario
                 if(task.isSuccessful()){
 
+                    UsuarioFirebase.atualizarNomeUsuario(usuario.getNome());
+
                     try{
 
                         String idUsuario = Base64Custom.codificadorBase64(usuario.getEmail());
@@ -100,9 +103,7 @@ public class CadastroActivity extends AppCompatActivity {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
-
                     finish();
-
 
                 }else{
 
