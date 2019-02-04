@@ -23,6 +23,7 @@ import com.example.luan.whatsapp.config.ConfiguracaoFirebase;
 import com.example.luan.whatsapp.helper.Base64Custom;
 import com.example.luan.whatsapp.helper.Permissao;
 import com.example.luan.whatsapp.helper.UsuarioFirebase;
+import com.example.luan.whatsapp.model.Usuario;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -52,6 +53,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     private ImageButton btnEditNome;
     private StorageReference storageReference;
     private String idUsuario;
+    private Usuario usuarioLogado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         //Configurações Iniciais
         storageReference = ConfiguracaoFirebase.getFirebaseStorage();
         idUsuario = UsuarioFirebase.getIdUsuario();
+        usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
 
         //Validar permissões
         Permissao.validarPermissoes(permissoesNecessarias, this, 1);
@@ -122,6 +125,10 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                 String nome = editNome.getText().toString();
                 boolean retorno = UsuarioFirebase.atualizarNomeUsuario( nome );
                 if( retorno ){
+
+                    usuarioLogado.setNome( nome );
+                    usuarioLogado.atualizar();
+
                     Toast.makeText(ConfiguracoesActivity.this,
                             "Nome alterado com sucesso!",
                             Toast.LENGTH_SHORT).show();
@@ -177,9 +184,6 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(ConfiguracoesActivity.this,
-                                    "Sucesso ao fazer upload da imagem",
-                                    Toast.LENGTH_SHORT).show();
 
                             taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
@@ -197,7 +201,16 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     }
 
     private void atualizaFotoUsuario(Uri url) {
-        UsuarioFirebase.atualizarFotoUsuario(url);
+        boolean retorno = UsuarioFirebase.atualizarFotoUsuario(url);
+
+        if(retorno){
+            usuarioLogado.setFoto( url.toString());
+            usuarioLogado.atualizar();
+
+            Toast.makeText(ConfiguracoesActivity.this,
+                    "Foto alterada!",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
