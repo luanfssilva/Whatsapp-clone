@@ -81,5 +81,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
+    <ImageButton
+        android:id="@+id/imageGaleria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_image"
+        app:layout_constraintEnd_toEndOf="@+id/profile_image"
+        android:src="@drawable/ic_photo_library_gray_24dp" />
+
+    <ImageButton
+        android:id="@+id/imageCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_image"
+        app:layout_constraintStart_toStartOf="@+id/profile_image"
+        android:src="@drawable/ic_photo_camera_gray_24dp" />
+
 
 </android.support.constraint.ConstraintLayout>
