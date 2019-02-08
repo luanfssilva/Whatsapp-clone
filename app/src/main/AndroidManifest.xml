@@ -34,6 +34,7 @@
             android:parentActivityName=".activity.MainActivity" />
         <activity
             android:name=".activity.ChatActivity"
+            android:label="@string/title_activity_chat"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme"></activity>
     </application>
