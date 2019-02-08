@@ -2,15 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.luan.whatsapp">
 
-    <!--required = true só permite que usuarios que tenham
-    camera no smartphone baixem o app-->
+    <!--
+    required = true só permite que usuarios que tenham
+    camera no smartphone baixem o app
+    -->
     <uses-feature
         android:name="android.hardware.camera2"
-        android:required="true"
-        />
+        android:required="true" />
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -28,8 +29,13 @@
         </activity>
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.CadastroActivity" />
-        <activity android:name=".activity.ConfiguracoesActivity"
-            android:parentActivityName=".activity.MainActivity"></activity>
+        <activity
+            android:name=".activity.ConfiguracoesActivity"
+            android:parentActivityName=".activity.MainActivity" />
+        <activity
+            android:name=".activity.ChatActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
