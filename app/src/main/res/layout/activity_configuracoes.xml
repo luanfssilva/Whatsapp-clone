@@ -54,7 +54,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/Username" />
+            android:text="@string/user_name" />
 
         <ImageButton
             android:id="@+id/btnEditarNome"

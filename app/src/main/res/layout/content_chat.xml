@@ -37,7 +37,7 @@
             android:paddingRight="16dp">
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/editMensagem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -46,7 +46,7 @@
                 android:inputType="textPersonName" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/imageFoto"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_photo_camera_gray_24dp" />
@@ -54,7 +54,7 @@
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/fabEnviarMsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"

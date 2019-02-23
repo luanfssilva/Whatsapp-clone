@@ -79,7 +79,6 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         editNome = findViewById(R.id.editNome);
         btnEditNome = findViewById(R.id.btnEditarNome);
 
-
         //Recuperar dados do usuário
         FirebaseUser usuario = UsuarioFirebase.getUsuarioAtual();
         Uri url = usuario.getPhotoUrl();

@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbarPrincipal);
-        toolbar.setTitle("WhatasApp");
+        toolbar.setTitle("WhatsApp");
         setSupportActionBar(toolbar);
 
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
