@@ -11,13 +11,11 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +29,7 @@ import com.example.luan.whatsapp.config.ConfiguracaoFirebase;
 import com.example.luan.whatsapp.helper.Base64Custom;
 import com.example.luan.whatsapp.helper.Permissao;
 import com.example.luan.whatsapp.helper.UsuarioFirebase;
+import com.example.luan.whatsapp.model.Conversa;
 import com.example.luan.whatsapp.model.Mensagem;
 import com.example.luan.whatsapp.model.Usuario;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -237,7 +236,10 @@ public class ChatActivity extends AppCompatActivity {
             salvarMensagem(idUsuarioRemetente,idUsuarioDestinatario,mensagem);
 
             //Salvar mensagem para o destinario
-            salvarMensagem(idUsuarioDestinatario,idUsuarioRemetente,mensagem);
+            //salvarMensagem(idUsuarioDestinatario,idUsuarioRemetente,mensagem);
+
+            //Salvar conversa
+            salvarConversa(mensagem);
 
         }else{
             Toast.makeText(ChatActivity.this,
@@ -247,6 +249,17 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    private void salvarConversa(Mensagem msg) {
+
+        Conversa conversaRemetente = new Conversa();
+        conversaRemetente.setIdRemetente(idUsuarioRemetente);
+        conversaRemetente.setIdDestinatario(idUsuarioDestinatario);
+        conversaRemetente.setUltimaMensagem(msg.getMensagem());
+        conversaRemetente.setUsuarioExibicao(usuarioDestinatario);
+
+        conversaRemetente.salvar();
+    }
+
     private void salvarMensagem(String idRemetente, String idDestinario, Mensagem msg){
 
         DatabaseReference database = ConfiguracaoFirebase.getFirebaseDatabase();
@@ -254,6 +267,11 @@ public class ChatActivity extends AppCompatActivity {
 
         mensagemRef.child(idRemetente)
                 .child(idDestinario)
+                .push()
+                .setValue(msg);
+
+        mensagemRef.child(idDestinario)
+                .child(idRemetente)
                 .push()
                 .setValue(msg);
 
