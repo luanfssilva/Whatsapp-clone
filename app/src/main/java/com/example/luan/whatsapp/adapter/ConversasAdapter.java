@@ -11,46 +11,52 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.luan.whatsapp.R;
+import com.example.luan.whatsapp.model.Conversa;
 import com.example.luan.whatsapp.model.Usuario;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * Created by @luanfssilva on 08/02/2019.
+ * Created by @luanfssilva on 04/04/2019.
  */
 
 
-public class ContatosAdapter extends RecyclerView.Adapter<ContatosAdapter.MyViewHoldder> {
+public class ConversasAdapter extends RecyclerView.Adapter<ConversasAdapter.MyViewHolder> {
 
-    private List<Usuario> contatos;
+    private List<Conversa> conversas;
     private Context context;
 
-    public ContatosAdapter(List<Usuario> listaContatos, Context c) {
-        this.contatos = listaContatos;
+
+    public ConversasAdapter(List<Conversa> lista, Context c) {
+        this.conversas = lista;
         this.context = c;
     }
 
     @NonNull
     @Override
-    public MyViewHoldder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemLista = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_lista_contatos, parent, false);
-        return new MyViewHoldder(itemLista);
+        return new MyViewHolder(itemLista);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHoldder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        Usuario usuario = contatos.get(position);
+        Conversa conversa = conversas.get(position);
 
+        holder.ultimaMensagem.setText(conversa.getUltimaMensagem());
+
+        Usuario usuario = conversa.getUsuarioExibicao();
         holder.nome.setText(usuario.getNome());
-        holder.email.setText(usuario.getEmail());
 
-        if (usuario.getFoto() != null){
+        if( usuario.getFoto() != null){
             Uri uri = Uri.parse(usuario.getFoto());
             Glide.with(context).load(uri).into(holder.foto);
-        }else{
+        }else {
             holder.foto.setImageResource(R.drawable.padrao);
         }
 
@@ -58,20 +64,20 @@ public class ContatosAdapter extends RecyclerView.Adapter<ContatosAdapter.MyView
 
     @Override
     public int getItemCount() {
-        return contatos.size();
+        return conversas.size();
     }
 
-    public class MyViewHoldder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView nome,email;
-        private CircleImageView foto;
+        CircleImageView foto;
+        TextView nome, ultimaMensagem;
 
-        public MyViewHoldder(View itemView) {
+        public MyViewHolder(View itemView) {
             super(itemView);
 
             foto = itemView.findViewById(R.id.imageFoto);
             nome = itemView.findViewById(R.id.textTitulo);
-            email = itemView.findViewById(R.id.textSubtitulo);
+            ultimaMensagem = itemView.findViewById(R.id.textSubtitulo);
 
         }
     }
