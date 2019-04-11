@@ -1,6 +1,7 @@
 package com.example.luan.whatsapp.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,11 +11,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.example.luan.whatsapp.R;
+import com.example.luan.whatsapp.activity.ChatActivity;
 import com.example.luan.whatsapp.adapter.ConversasAdapter;
 import com.example.luan.whatsapp.config.ConfiguracaoFirebase;
+import com.example.luan.whatsapp.helper.RecyclerItemClickListener;
 import com.example.luan.whatsapp.helper.UsuarioFirebase;
 import com.example.luan.whatsapp.model.Conversa;
 import com.example.luan.whatsapp.model.Usuario;
@@ -56,6 +60,34 @@ public class ConversasFragment extends Fragment {
         recyclerViewConversas.setLayoutManager(layoutManager);
         recyclerViewConversas.setHasFixedSize(true);
         recyclerViewConversas.setAdapter(adapter);
+
+        //Configurar evento de clique
+        recyclerViewConversas.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        getActivity(),
+                        recyclerViewConversas,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                Conversa conversaSelecionada = listaConversas.get( position);
+
+                                Intent i = new Intent(getActivity(), ChatActivity.class);
+                                i.putExtra("chatContato", conversaSelecionada.getUsuarioExibicao());
+                                startActivity( i );
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+
+                            }
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            }
+                        }
+                )
+        );
 
         //Configura conversas Ref
         String identificadorUsuario = UsuarioFirebase.getIdUsuario();
