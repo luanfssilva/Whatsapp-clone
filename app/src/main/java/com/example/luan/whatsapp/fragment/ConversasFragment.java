@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,9 @@ public class ConversasFragment extends Fragment {
 
     private RecyclerView recyclerViewConversas;
     private List<Conversa> listaConversas = new ArrayList<>();
+    private List<Conversa> NovaListaConversas = new ArrayList<>();
     private ConversasAdapter adapter;
+    private boolean statusPesquisa = false;
 
     private DatabaseReference database;
     private DatabaseReference conversasRef;
@@ -69,7 +72,15 @@ public class ConversasFragment extends Fragment {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                Conversa conversaSelecionada = listaConversas.get( position);
+
+                                Conversa conversaSelecionada;
+
+                                if(!statusPesquisa){
+                                    conversaSelecionada = listaConversas.get( position);
+                                }
+                                else{
+                                    conversaSelecionada = NovaListaConversas.get(position);
+                                }
 
                                 Intent i = new Intent(getActivity(), ChatActivity.class);
                                 i.putExtra("chatContato", conversaSelecionada.getUsuarioExibicao());
@@ -108,6 +119,34 @@ public class ConversasFragment extends Fragment {
     public void onStop() {
         super.onStop();
         conversasRef.removeEventListener(childEventListener);
+    }
+
+    public void pesquisarConversas(String texto){
+        //Log.d("pesquisa", texto);
+
+        NovaListaConversas.clear();
+        statusPesquisa = true;
+
+        for (Conversa conversa : listaConversas){
+
+            String nome = conversa.getUsuarioExibicao().getNome().toLowerCase();
+            String ultimaMsg = conversa.getUltimaMensagem().toLowerCase();
+
+            if( nome.contains( texto ) || ultimaMsg.contains( texto ) ){
+
+                NovaListaConversas.add( conversa );
+            }
+        }
+        adapter = new ConversasAdapter( NovaListaConversas, getActivity() );
+        recyclerViewConversas.setAdapter( adapter );
+        adapter.notifyDataSetChanged();
+    }
+
+    public void recarregarConversas(){
+        statusPesquisa = false;
+        adapter = new ConversasAdapter( listaConversas , getActivity() );
+        recyclerViewConversas.setAdapter( adapter );
+        adapter.notifyDataSetChanged();
     }
 
     public void recuperarConversas(){

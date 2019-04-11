@@ -41,6 +41,9 @@ dependencies {
     /*Dependencia Imagem*/
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 
+    /*Dependencia Search*/
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
 
